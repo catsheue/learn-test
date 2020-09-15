@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import { getUser } from "./api/github";
+import UserBar from "./UserBar";
+import Switcher from "./Switcher";
+// const renderLine = (user, key) => <li key={key}><b>{key}</b>:{user[key]}</li>;
+
 
 function App() {
+  const [user, setUser] = useState('');
+
+  useEffect(async () => {
+    // getUser('catsheue').then(
+    //   data => {setUser( data.entity.name )}
+    // )
+
+    const response = await fetch('https://api.github.com/users/catsheue');
+    const data = await response.json();
+    setUser(data.name);
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UserBar userName={user} />
+      <Switcher />
+
     </div>
   );
 }
