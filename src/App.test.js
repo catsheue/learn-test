@@ -26,7 +26,13 @@ it('should switch class', () => {
   const { getByTestId } = render(<Switcher onCall={onClick}  />)
   fireEvent.click(getByTestId('switcher-luna'));
   expect(onClick).toHaveBeenCalled();
-})
+});
+
+test('map calls its argument with a non-null argument', () => {
+  const mock = jest.fn();
+  [1].map(x => mock(x));
+  expect(mock).toBeCalledWith(expect.anything());
+});
 
 
 // describe('async get username', () => {
